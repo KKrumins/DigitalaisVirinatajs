@@ -83,3 +83,15 @@ obj/
 # Windows
 Thumbs.db
 
+.vs/
+.config
+logs/
+*.DotSettings.user
+test/
+profile.arm.json
+.DS_Store
+*.csproj.user
+PublishProfiles/
+bin/
+obj/
+packages.lock.json
