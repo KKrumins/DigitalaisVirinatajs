@@ -345,7 +345,7 @@ namespace WpfApp1
         public string ProcessName { get; set; } = "";
         public string DisplayName { get; set; } = "";
 
-        public bool IsSelected
+        public bool IsSelected 
         {
             get => _isSelected;
             set
