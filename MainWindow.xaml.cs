@@ -30,6 +30,12 @@ namespace WpfApp1
         [DllImport("user32.dll")]
         private static extern bool IsWindowVisible(IntPtr hWnd);
 
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out int pvAttribute, int cbAttribute);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
@@ -48,6 +54,9 @@ namespace WpfApp1
 
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT { public int X, Y; }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT { public int Left, Top, Right, Bottom; }
 
         private const uint ES_CONTINUOUS = 0x80000000;
         private const uint ES_SYSTEM_REQUIRED = 0x00000001;
@@ -275,6 +284,29 @@ namespace WpfApp1
         private static bool IsTaskbarWindow(IntPtr hWnd)
         {
             if (!IsWindowVisible(hWnd)) return false;
+
+            // Exclude windows that are cloaked by DWM (modern/UWP apps may be cloaked when not shown on taskbar)
+            const int DWMWA_CLOAKED = 14;
+            try
+            {
+                if (DwmGetWindowAttribute(hWnd, DWMWA_CLOAKED, out int cloaked, sizeof(int)) == 0 && cloaked != 0)
+                    return false;
+            }
+            catch
+            {
+                // If DWM call fails, don't block based on cloak state
+            }
+
+            // Exclude windows with no visible area
+            try
+            {
+                if (GetWindowRect(hWnd, out var rect))
+                {
+                    if (rect.Right - rect.Left <= 0 || rect.Bottom - rect.Top <= 0)
+                        return false;
+                }
+            }
+            catch { }
 
             int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
 
