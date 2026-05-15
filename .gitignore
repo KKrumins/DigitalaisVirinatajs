@@ -64,6 +64,19 @@ secrets.json
 # Ignore JetBrains Rider caches
 .idea/
 
+# Generated build / MSBuild / WPF designer artifacts
+# These are generated under obj/ and can sometimes be tracked if added
+# before the ignore rule. Keep these explicit to ensure they're covered.
+*.g.cs
+*.g.i.cs
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.assets.cache
+project.assets.json
+project.nuget.cache
+*.dgspec.json
+obj/
+
 # macOS
 .DS_Store
 
