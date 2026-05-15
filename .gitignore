@@ -1,0 +1,72 @@
+# Visual Studio / .NET Core
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Publish output
+publish/
+*.publish
+
+# Runtime files
+*.dll
+*.exe
+*.app
+*.log
+*.pdb
+
+# Test output
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Rider/IDE files
+.idea/
+*.iml
+
+# Resharper
+_ReSharper*/
+*.ReSharper.cache
+
+# User-specific files
+*.credentials
+*.env
+*.local
+
+# Node
+node_modules/
+
+# Others
+*.psess
+*.vsp
+*.vsix
+
+# Ignore local appsettings / secrets
+appsettings.Development.json
+secrets.json
+
+# Ignore JetBrains Rider caches
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
